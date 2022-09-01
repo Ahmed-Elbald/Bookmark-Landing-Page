@@ -87,9 +87,13 @@ img {
   height: 100%;
 }
 
+html,
+body {
+  overflow-x: hidden;
+}
+
 body {
   font-family: var(--ff-pr);
-  overflow-x: clip;
 }
 
 i,
@@ -516,7 +520,12 @@ button {
   display: none;
 }
 .section--features .features .feature__img {
-  height: 65vh;
+  height: 70vh;
+}
+@media (min-width: 1100px) {
+  .section--features .features .feature__img {
+    height: auto;
+  }
 }
 .section--features .features .feature__img::before {
   border-radius: 0 100vh 100vh 0;

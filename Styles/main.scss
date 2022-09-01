@@ -103,9 +103,13 @@ img {
   height: 100%;
 }
 
+html,
+body {
+  overflow-x: hidden;
+}
+
 body {
   font-family: var(--ff-pr);
-  overflow-x: clip;
 }
 
 i,
@@ -521,7 +525,11 @@ button {
       }
 
       &__img {
-        height: 65vh;
+        height: 70vh;
+
+        @include min-mq($max) {
+          height: auto;
+        }
 
         &::before {
           border-radius: 0 100vh 100vh 0;
