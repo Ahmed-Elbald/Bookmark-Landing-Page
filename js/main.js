@@ -65,6 +65,10 @@ questions.forEach(question => {
   questionHeader.addEventListener("click", () => {
 
     question.classList.toggle("js-expanded");
+    let expandBtn = questionHeader.querySelector(".question__expand-btn");
+    let btnCurrentState = expandBtn.getAttribute("aria-expanded");
+    if (btnCurrentState == "true") expandBtn.setAttribute("aria-expanded", "false");
+    else expandBtn.setAttribute("aria-expanded", "true");
 
   });
 
