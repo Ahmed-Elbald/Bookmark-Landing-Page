@@ -447,6 +447,11 @@ button {
 /* Features Section */
 .section--features {
   .slider-btns {
+    --btn-height: 50px;
+    --marker-top: calc(var(--btn-height) - 1px);
+    --marker-left: 0;
+    --marker-width: 0px;
+    position: relative;
     max-width: var(--max-width-block-1);
     margin-inline: auto;
     display: flex;
@@ -458,49 +463,45 @@ button {
 
     @include min-mq($max) {
       flex-direction: row;
-      max-width: none;
       border-top: none;
+      max-width: max-content;
+    }
+
+    &::before {
+      content: "";
+      position: absolute;
+      background-color: var(--clr-pr-500);
+      height: 4px;
+      width: var(--marker-width);
+      left: var(--marker-left);
+      top: var(--marker-top);
+      transition-duration: .5s;
+
+      @include min-mq($max) {
+        top: 100%;
+      }
+
+      @include max-mq($max) {
+        left: 50%;
+        transform: translateX(-50%);
+      }
     }
 
 
     .slider-btn {
       position: relative;
-      height: 50px;
+      height: var(--btn-height);
+      color: var(--clr-neu-400);
       padding: 1rem 2rem;
       border-bottom: 2px solid var(--clr-neu-200);
+      transition-duration: .5s;
 
-      @include min-mq($max) {
-        width: 200px;
-      }
-
-      &::before {
-        transition-duration: .5s;
-        box-sizing: content-box;
-        content: attr(data-text);
-        position: absolute;
-        width: max-content;
-        height: 100%;
-        top: 0;
-        left: 50%;
-        transform: translateX(-50%);
-        display: flex;
-        align-items: center;
-        justify-content: center;
-        color: var(--clr-neu-400);
-        border-bottom: 4px solid transparent;
-
-        @include min-mq($max) {
-          width: 100%;
-        }
-      }
-
-      &:hover::before {
+      &:hover {
         color: var(--clr-pr-500);
       }
 
-      &.js-active::before {
+      &.js-active {
         color: var(--clr-neu-500);
-        border-bottom-color: var(--clr-pr-500);
       }
     }
   }
@@ -528,7 +529,7 @@ button {
         height: 70vh;
 
         @include min-mq($max) {
-          height: auto;
+          height: 50vh;
         }
 
         &::before {

@@ -4,7 +4,9 @@ const mainHeader = document.querySelector(".main-header");
 const navOpenBtn = document.querySelector(".nav-mobile-open-btn");
 const navCloseBtn = document.querySelector(".nav-mobile__close-btn");
 
-const sliderBtns = document.querySelectorAll(".slider-btns .slider-btn");
+let currentBtnActive = 1;
+const sliderBtnsContainer = document.querySelector(".slider-btns");
+const sliderBtns = sliderBtnsContainer.querySelectorAll(".slider-btn");
 const featuresContainer = document.querySelector(".features");
 const features = featuresContainer.querySelectorAll(".feature");
 
@@ -33,12 +35,18 @@ navCloseBtn.addEventListener("click", () => {
 });
 
 // Controling the slider
+moveMarker(1);
+window.addEventListener("resize", () => {
+  moveMarker(currentBtnActive);
+});
+
 sliderBtns.forEach(btn => {
 
   btn.addEventListener("click", (e) => {
 
     let btnOrder = e.target.dataset.id;
     featuresContainer.style.transform = `translateX(-${(btnOrder - 1) * 100}%)`;
+    moveMarker(btnOrder);
     addActive(features, btnOrder);
     addActive(sliderBtns, btnOrder);
 
@@ -57,6 +65,39 @@ function addActive(elements, target) {
   }
 
 };
+
+function moveMarker(order) {
+
+  if (window.innerWidth > 1100) {
+    let offset = 0;
+    for (let i = 1; i < sliderBtns.length + 1; i++) {
+      if (i != order) {
+        offset += sliderBtns[i - 1].clientWidth;
+      } else {
+        sliderBtnsContainer.style
+          .setProperty("--marker-width", `${sliderBtns[i - 1].clientWidth}px`);
+        currentBtnActive = i;
+        break;
+      }
+    }
+    sliderBtnsContainer.style.setProperty("--marker-left", `${offset}px`);
+  } else {
+    let offset = 0;
+    for (let i = 0; i < sliderBtns.length + 1; i++) {
+      if (i != order) {
+        offset += sliderBtns[i].offsetHeight;
+      } else {
+        let btnCharacters = sliderBtns[i - 1].textContent.length;
+        sliderBtnsContainer.style
+          .setProperty("--marker-width", `${btnCharacters - 4}ch`);
+        currentBtnActive = i;
+        break;
+      }
+    }
+    sliderBtnsContainer.style.setProperty("--marker-top", `${offset}px`);
+  }
+
+}
 
 // Controling the questions
 questions.forEach(question => {
